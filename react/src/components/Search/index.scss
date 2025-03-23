@@ -1,1 +1,82 @@
-// 2
+@import "../../app.scss";
+
+.search-input {
+  position: relative;
+  display: flex;
+  width: 414px;
+  height: 47px;
+  align-items: center;
+  background: linear-gradient(0deg, #121212, #121212),
+    linear-gradient(0deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0));
+  border: 1px solid transparent;
+  border-radius: 8px;
+  margin-left: 14px;
+  padding: 8px 12px;
+  transition: all 0.2s ease-in-out;
+
+  @media (max-width: $tablet) {
+    width: 310px;
+    height: 35px;
+  }
+
+  .search-icon,
+  .close-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .search-icon {
+    margin-right: 8px;
+    opacity: 0.47;
+  }
+
+  .close-icon {
+    margin-left: 8px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    display: none;
+  }
+
+  input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: rgba(255, 255, 255, 0.87);
+    font-family: "DIN Next LT Pro", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    letter-spacing: 0;
+    vertical-align: middle;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.47);
+    }
+  }
+
+  &.has-value {
+    background: rgba(255, 255, 255, 0.12);
+
+    .close-icon {
+      opacity: 0.77;
+      display: block;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  &:focus-within {
+    background: rgba(255, 255, 255, 0.12);
+    input {
+      color: rgba(255, 255, 255, 0.87);
+    }
+
+    .close-icon {
+      display: block;
+    }
+  }
+}

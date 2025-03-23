@@ -2,6 +2,7 @@ import { Launch } from "types";
 import { addFavorite, removeFavorite } from "api/favorites";
 import { ReactComponent as Star } from "assets/images/star.svg";
 import "./index.scss";
+import { useState } from "react";
 
 interface LaunchCardProps {
   launch: Launch;
@@ -9,10 +10,21 @@ interface LaunchCardProps {
 }
 
 export const LaunchCard = ({ launch, updateFavorite }: LaunchCardProps) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const handleClickFavorite = async () => {
-    await (launch.favorite
-      ? removeFavorite(launch.flight_number)
-      : addFavorite(launch.flight_number));
+    if (isLoading) return;
+    setIsLoading(true);
+    try {
+      await (launch.favorite
+        ? removeFavorite(launch.flight_number)
+        : addFavorite(launch.flight_number));
+      updateFavorite(launch.flight_number);
+    } catch (error) {
+      console.error("Error setting favorite status... ", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

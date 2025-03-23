@@ -1,28 +1,37 @@
 header {
-  height: 100px;
+  height: 206px;
   position: relative;
-  background: linear-gradient(180deg, #121212 64.11%, #1E1E1E 100%);
+  background: linear-gradient(180deg, #121212 64.11%, #1e1e1e 100%);
   padding-top: 28px;
   padding-left: 30px;
-box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12), 0px 5px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.14), 0px 3px 14px rgba(0, 0, 0, 0.12),
+    0px 5px 5px rgba(0, 0, 0, 0.2);
 
   .header-bottom {
     margin-top: 10px;
     width: 100%;
     text-align: left;
+    font-size: 36px;
+    font-weight: 700;
+    line-height: 48px;
+    letter-spacing: 0.04em;
     .tabs {
       display: flex;
       position: absolute;
       bottom: 0;
-      
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 32px;
+      letter-spacing: 0;
       div {
-        cursor:pointer;
+        cursor: pointer;
         text-align: center;
-        color: #FFFFFF91;
+        color: #ffffff91;
         padding-bottom: 2px;
         width: 140px;
         &.active {
           color: white;
+          font-weight: 700;
           border-bottom: 1px solid white;
         }
       }

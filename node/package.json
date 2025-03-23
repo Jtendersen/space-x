@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "compile": "node ./node_modules/typescript/lib/tsc.js && node dist/index.js",
-    "dev": "docker-compose -f docker-compose.dev.yml up",
+    "dev": "docker compose -f docker-compose.dev.yml up",
     "start": "nodemon -e ts  --exec \"npm run compile\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prettier": "prettier . --ignore-path .gitignore",

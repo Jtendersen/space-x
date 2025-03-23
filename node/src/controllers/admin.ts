@@ -5,16 +5,16 @@ export const generateToken = async (req, res) => {
   const userId = req.body.userId;
 
   if (!jwtSecretKey) {
-    res.status(400).send("JWT Secret not set");
+    return res.status(400).send("JWT Secret not set");
   }
 
   if (!userId) {
-    res.status(400).send("UserId not set");
+    return res.status(400).send("UserId not set");
   }
 
   const data = {
     time: Date(),
-    userId
+    userId,
   };
 
   const token = jwt.sign(data, jwtSecretKey);
