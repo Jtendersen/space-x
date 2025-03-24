@@ -1,6 +1,6 @@
 import { login } from "api";
 import "./index.scss";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "contexts/AuthContext";
 
 export const Login = () => {
@@ -19,6 +19,10 @@ export const Login = () => {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    localStorage.clear();
+  }, []);
 
   return (
     <div className="login-page">

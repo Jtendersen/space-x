@@ -5,6 +5,7 @@ import { LaunchCard, Search, Pagination, CARDS_PER_PAGE } from "components";
 import { getLaunches } from "../../api";
 import "./index.scss";
 import { useLocalStorage } from "hooks";
+import { AuthContext } from "contexts/AuthContext";
 
 export const LaunchesList = () => {
   const [launches, setLaunches] = useState<Launch[]>([]);
@@ -13,7 +14,9 @@ export const LaunchesList = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { showAll } = useContext(ModeContext);
-  const { favorites, updateFavorite } = useLocalStorage();
+  const { isAuthenticated } = useContext(AuthContext);
+  const { favorites, updateFavorite, setFavoritesFromBackend } =
+    useLocalStorage();
 
   const filterLaunches = () => {
     if (searchText.trim() !== "") {
@@ -38,6 +41,8 @@ export const LaunchesList = () => {
   };
 
   const loadLaunches = async () => {
+    //Prevent false request on first login attempt
+    if (!isAuthenticated) return;
     setIsLoading(true);
     try {
       const launches = await getLaunches();
@@ -49,11 +54,27 @@ export const LaunchesList = () => {
     }
   };
 
+  //Update favorites from backend on first load, once the lauches are loaded....
   useEffect(() => {
-    loadLaunches();
-  }, []);
+    if (launches.length > 0) {
+      // Create a favorites mapping from the backend data.
+      const backendFavorites = launches.reduce((acc, launch) => {
+        acc[launch.flight_number] = launch.favorite;
+        return acc;
+      }, {} as Record<number, boolean>);
 
-  useEffect(filterLaunches, [searchText, showAll, launches]);
+      setFavoritesFromBackend(backendFavorites);
+    }
+  }, [launches]);
+
+  useEffect(() => {
+    //Prevent false request on first login attempt
+    if (isAuthenticated) {
+      loadLaunches();
+    }
+  }, [isAuthenticated]);
+
+  useEffect(filterLaunches, [searchText, showAll, launches, favorites]);
 
   return (
     <div className="launches-list-container">
